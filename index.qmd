@@ -1,0 +1,29 @@
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(readr)
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+data <- read_csv('/Users/chittibellamkonda/Downloads/archive/city_day.csv')
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+avg_pm25 <- data |>
+  group_by(City) |>
+  summarise(avg_PM2.5 = mean(PM2.5, na.rm = TRUE))
+
+ggplot(avg_pm25, aes(x = reorder(City, -avg_PM2.5), y = avg_PM2.5)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average PM2.5 Levels by City", x = "City", y = "Average PM2.5 (µg/m³)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
